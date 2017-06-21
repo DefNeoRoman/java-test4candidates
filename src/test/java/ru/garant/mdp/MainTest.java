@@ -53,11 +53,18 @@ public class MainTest {
 	}
 	
 	@Test
-	@Ignore
 	public void shouldNotCrashWithOutOfMemory () {
-		assertNotNull(sessionFactory);
-		
-		assertTrue ("NOT IMPLEMENTED YET", false);
+		for (int i = 1; i <= 1000000; i++) {
+			Model model = createRandomModel();
+			session.save(model);
+			
+			if (i % 10000 == 0) {
+				System.out.println ("processed: " + i);
+				
+				tx.commit();
+				tx = session.beginTransaction();
+			}
+		}
 	}
 	
 	private Model createRandomModel () {
