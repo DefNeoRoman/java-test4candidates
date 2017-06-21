@@ -42,7 +42,7 @@ public class MainTest {
     }
     
 	@Test
-	public void shouldFindModelById () {
+	public void shouldFindModelByField () {
 		Model model = createRandomModel();
 		session.save(model);
 
@@ -53,6 +53,7 @@ public class MainTest {
 	}
 	
 	@Test
+	@Ignore
 	public void shouldNotCrashWithOutOfMemory () {
 		for (int i = 1; i <= 1000000; i++) {
 			Model model = createRandomModel();
