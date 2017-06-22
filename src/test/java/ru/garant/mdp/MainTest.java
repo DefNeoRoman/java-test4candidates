@@ -53,6 +53,7 @@ public class MainTest {
 	}
 	
 	@Test
+	//@Ignore
 	public void shouldNotCrashWithOutOfMemory () {
 		for (int i = 1; i <= 1000000; i++) {
 			Model model = createRandomModel();
