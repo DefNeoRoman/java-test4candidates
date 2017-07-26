@@ -48,7 +48,7 @@ public class MainTest {
 
 		model.setField0("TEST1");
 		session.save(model);
-			
+			session.flush();
 		assertTrue(null != session.createSQLQuery("select id from model where field0 = '" + model.getField0() + "'").uniqueResult());
 	}
 	
@@ -58,12 +58,15 @@ public class MainTest {
 		for (int i = 1; i <= 1000000; i++) {
 			Model model = createRandomModel();
 			session.save(model);
-			
+
 			if (i % 10000 == 0) {
 				System.out.println ("processed: " + i);
-				
-				tx.commit();
-				tx = session.beginTransaction();
+
+				session.flush();
+				session.clear();
+
+//                tx.commit();
+//                tx = session.beginTransaction();
 
 			}
 		}
