@@ -64,8 +64,10 @@ public class MainTest {
 				
 				tx.commit();
 				tx = session.beginTransaction();
+
 			}
 		}
+
 	}
 	
 	private Model createRandomModel () {
