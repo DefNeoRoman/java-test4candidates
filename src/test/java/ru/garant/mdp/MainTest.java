@@ -3,6 +3,7 @@ package ru.garant.mdp;
 import static org.junit.Assert.*;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.hibernate.StatelessSession;
 import org.junit.*;
 import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
@@ -73,6 +74,32 @@ public class MainTest {
 			}
 		}
 
+	}
+	@Test
+	//@Ignore
+	// Чуть быстрее вариант теста чем верхний
+	// Версия со StatelessSession
+	public void shouldNotCrashWithOutOfMemory2 () {
+		StatelessSession statelessSession = sessionFactory.openStatelessSession();
+		Transaction transaction = statelessSession.beginTransaction();
+		for (int i = 1; i <= 1000000; i++) {//тестировал на 10000,
+			// а не на миллион чтобы побыстрее можно было сравнить результаты
+			Model model = createRandomModel();
+			statelessSession.insert(model);
+
+			if (i % 10000 == 0) {
+				System.out.println ("processed: " + i);
+
+
+
+//                tx.commit(); этого не требуется так как этот функционал есть в аннотации @After
+//                tx = session.beginTransaction(); А это есть в аннотации @Before
+				// Транзакция должна начаться и завершиться
+
+			}
+		}
+		transaction.commit();
+		statelessSession.close();
 	}
 	
 	private Model createRandomModel () {
