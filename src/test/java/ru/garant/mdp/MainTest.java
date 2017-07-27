@@ -63,11 +63,12 @@ public class MainTest {
 			if (i % 10000 == 0) {
 				System.out.println ("processed: " + i);
 
-				session.flush(); 
-				session.clear();
+				session.flush(); //запись в базу данных
+				session.clear(); // очистка сессии, чтобы не было переполнения памяти
 
-//                tx.commit();
-//                tx = session.beginTransaction();
+//                tx.commit(); этого не требуется так как этот функционал есть в аннотации @After
+//                tx = session.beginTransaction(); А это есть в аннотации @Before
+				// Транзакция должна начаться и завершиться
 
 			}
 		}
