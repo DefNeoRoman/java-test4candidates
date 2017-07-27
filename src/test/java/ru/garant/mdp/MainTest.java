@@ -48,7 +48,8 @@ public class MainTest {
 
 		model.setField0("TEST1");
 		session.save(model);
-			session.flush();
+			session.flush();//Не было Session.flush(), поэтому в базу данных запись не происходила
+		//тест получался отрицательным
 		assertTrue(null != session.createSQLQuery("select id from model where field0 = '" + model.getField0() + "'").uniqueResult());
 	}
 	
@@ -62,7 +63,7 @@ public class MainTest {
 			if (i % 10000 == 0) {
 				System.out.println ("processed: " + i);
 
-				session.flush();
+				session.flush(); 
 				session.clear();
 
 //                tx.commit();
